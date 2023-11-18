@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // var a
+    // var b
+    // {
+    //   a = 5
+    //   b = 3
+    //   console.log("a:", a, "window.a:", window.a)
+    //   console.log("b:", b, "window.b:", window.b)
+    //   function a() { }
+    //   console.log("a:", a, "window.a:", window.a)
+    //   a = {}
+    //   console.log("a:", a, "window.a:", window.a)
+    // }
+    // console.log("a:", a)
+    // console.log("b:", b)
+
+    var a = {
+      num:1,
+      fn(){
+        return this.num
+      },
+    }
+
+    var b = {
+      num:2,
+      getNum1(){
+        return a.fn()
+      },
+      getNum2:a.fn,
+      getNum3(){
+        const fn = a.fn;
+        return fn()
+      }
+    }
+
+    console.log('getNum1:',b.getNum1());  // 1
+    console.log('getNum2:',b.getNum2());  // 2
+    console.log('getNum3:',b.getNum3());  // undefined
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+
+    // Object.create()
+    let q = {};
+    let p = Object.create(q);
+    console.log('p:', p);
+    // console.log(p.__proto__ === q);
+    // console.log(p.__proto__.__proto__ === Object.prototype);
+
+    // 实现 Object.create()
+    function newCreate(obj){
+      if (obj == null) throw new TypeError("");
+      if (typeof obj !== "object" && typeof obj !== "function") throw new TypeError("");
+      function Fn() {};
+      Fn.prototype = obj;
+      return new Fn();
+    }
+
+    let newP = newCreate(q);
+    console.log('newP:', newP);
+
+    // new 
+    // function Cat(name) {
+    //   this.name = name;
+    // }
+    // Cat.prototype.sayName = function () {
+    //   console.log(this.name);
+    // }
+    // const c = new Cat('mimi');
+    // console.log('c:', c);
+
+    // // 1.new创建了一个对象，这个对象的原型链指向构造函数的原型
+    // console.log(c.__proto__ === Cat.prototype);
+
+    // // 2.构造函数的原型(是个对象)中有个constructor(是个函数)就是构造函数本身
+    // console.log(Cat.prototype.constructor === Cat);
+
+    // // 3.c的构造函数是Cat
+    // console.log(c.constructor === Cat);
+
+    // 实现 new
+    // function newFn(Fn) {
+    //   if (typeof Fn !== 'function') {
+    //     throw new TypeError('new operator function the first param must be a function');
+    //   }
+
+    //   var obj = Object.create(Fn.prototype);
+    //   var res = Fn.apply(obj, Array.prototype.slice.call(arguments, 1));
+    //   return (res && typeof res === 'object') ? res : obj;
+    // }
+
+    // const newC = newFn(Cat,'miaomiao');
+    // console.log('newC:', newC);
+
+    // 父类
+    // function Animal(name) {
+    //   this.name = name;
+    // }
+    // Animal.prototype.sayHi = function() {
+    //   console.log("Hi, I'm " + this.name);
+    // };
+
+    // // 子类
+    // function Dog(name) {
+    //   Animal.call(this, name); // 调用父类构造函数
+    //   this.type = 'dog';
+    //   this.age = 3;
+    // }
+    // Dog.prototype = new Animal(); // 子类原型指向父类的实例
+    // Dog.prototype.constructor = Dog; // 重置子类的构造器
+
+    // var dog = new Dog('Little');
+    // dog.sayHi(); // "Hi, I'm Little"
+
+    // var o = {
+    //   valueOf: () => { console.log('valueOf'); return {} },
+    //   toString: () => { console.log('toString'); return {} },
+    // }
+
+    // o * 2;
+    // String(o)
+
+    // o[Symbol.toPrimitive] = () => { console.log('toPrimitive'); return 'hello' }
+
+    // console.log(o + "");
+
+    // function changeUndefined() {
+    //   undefined = 1;
+    //   console.log(undefined);
+    // }
+
+    // changeUndefined();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 手写 apply & bind
+
+    Function.prototype.newApply = function (context = window) {
+      if (typeof this !== 'function') {
+        throw new TypeError('Error')
+      }
+
+      // 临时挂载执行函数
+      context.fn = this;
+
+      let res = arguments[1] ? context.fn(...arguments[1]) : context.fn();
+      delete context.fn;
+
+      return res;
+    }
+
+    Function.prototype.newBind = function () {
+      if (typeof this !== 'function') {
+        throw new TypeError('Error')
+      }
+
+      const _this = this;
+
+      // const args = Array.prototype.slice.call(arguments);
+      const args = [...arguments];
+      const newThis = args.shift();
+
+      return function() {
+        return _this.newApply(newThis, args);
+      };
+    }
+
+    const o = {
+      name:'Lilei',
+    }
+    const friends = ['Bob', 'Hmm'];
+    function sayName() {
+      return this.name;
+    }
+
+    function sayFriends() {
+      return `${this.name} friends: ${JSON.stringify([...arguments])}`;
+    }
+
+    console.log('apply--', sayFriends.apply(o, friends));
+    console.log('newApply--', sayFriends.newApply(o, friends));
+    console.log('bind--', sayName.bind(o)());
+    console.log('newBind--', sayName.newBind(o)());
+
+  </script>
+</body>
+</html>
