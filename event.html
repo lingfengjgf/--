@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div{
+      text-align: center;
+    }
+    #d1{
+      width: 300px;
+      height: 300px;
+      background: #f6f6f6;
+    }
+    #d2{
+      width: 200px;
+      height: 200px;
+      background: #bbb;
+    }
+    #d3{
+      width: 100px;
+      height: 100px;
+      background: #666;
+    }
+    #d4{
+      width: 100px;
+      height: 10px;
+      margin-top: 20px;
+      background: #999;
+    }
+    #d5{
+      width: 100px;
+      height: 10px;
+      margin-top: 20px;
+      background: #999;
+    }
+  </style>
+</head>
+<body>
+  <div id="d1">
+    <div id="d2">
+      <div id="d3"></div>
+    </div>
+  </div>
+  <a href="https://www.baidu.com">
+    <div id="d4">d4</div>
+  </a>
+  <div id="d5">d5</div>
+  <script>
+    const d1 = document.getElementById('d1');
+    const d2 = document.getElementById('d2');
+    const d3 = document.getElementById('d3');
+    const d4 = document.getElementById('d4');
+    const d5 = document.getElementById('d5');
+    d1.addEventListener('click', () => {
+      console.log('d1 click');
+    })
+    d2.addEventListener('click', (e) => {
+      e.stopPropagation();
+      console.log('d2 click');
+
+    })
+    d3.addEventListener('click', () => {
+      console.log('d3 click');
+    })
+    d4.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('d4 click');
+    })
+    d5.addEventListener('click', (e) => {
+      // e.stopImmediatePropagation();
+      console.log('d5 click1');
+    })
+    d5.addEventListener('click', (e) => {
+      e.stopImmediatePropagation();
+      console.log('d5 click2');
+    })
+    d5.addEventListener('click', (e) => {
+      console.log('d5 click3');
+    })
+  </script>
+</body>
+</html>

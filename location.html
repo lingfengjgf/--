@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="btn0">href</button>
+  <button id="btn1">assign</button>
+  <button id="btn2">replace</button>
+
+  <script>
+    const btn0 = document.getElementById('btn0');
+    btn0.addEventListener('click', ()=>{
+      location.href = 'file:///E:/product/概念/apply_bind.html';
+    })
+
+    const btn1 = document.getElementById('btn1');
+    btn1.addEventListener('click', ()=>{
+      location.assign('apply_bind.html');
+      // location.assign('file:///E:/product/概念/apply_bind.html');
+    })
+
+    const btn2 = document.getElementById('btn2');
+    btn2.addEventListener('click', ()=>{
+      location.replace("apply_bind.html");
+      // location.replace("file:///E:/product/概念/apply_bind.html");
+    })
+  </script>
+</body>
+</html>
