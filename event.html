@@ -25,13 +25,13 @@
     }
     #d4{
       width: 100px;
-      height: 10px;
+      height: 20px;
       margin-top: 20px;
       background: #999;
     }
     #d5{
       width: 100px;
-      height: 10px;
+      height: 20px;
       margin-top: 20px;
       background: #999;
     }
@@ -47,6 +47,12 @@
     <div id="d4">d4</div>
   </a>
   <div id="d5">d5</div>
+
+  <ul id="u1">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ul>
   <script>
     const d1 = document.getElementById('d1');
     const d2 = document.getElementById('d2');
@@ -79,6 +85,73 @@
     d5.addEventListener('click', (e) => {
       console.log('d5 click3');
     })
+  </script>
+
+  <script>
+    // 手写统一的事件绑定
+    class bindEvent {
+      constructor(element) {
+        this.el = element;
+      }
+
+      addEventListener(type, handler) {
+        if (this.el.addEventListener) {
+          this.el.addEventListener(type, handler, false);
+        } else if (this.el.attachEvent) {
+          const el = this.el;
+          el.attachEvent('on' + type, () => {
+            handler.call(el);
+          })
+        } else {
+          this.el['on' + type] = handler;
+        }
+      }
+
+      removeEventListener(type, handler) {
+        if (this.el.removeEventListener) {
+          this.el.removeEventListener(type, handler, false);
+        } else if (this.el.detachEvent) {
+          const el = this.el;
+          el.detachEvent('on' + type, () => {
+            handler.call(el);
+          })
+        } else {
+          this.el['on' + type] = null;
+        }
+      }
+
+      static stopPropagation(e) {
+        if (e.stopPropagation) {
+          e.stopPropagation();
+        } else {
+          e.cancelBubble = true;
+        }
+      }
+
+      static preventDefault(e) {
+        if (e.preventDefault) {
+          e.preventDefault();
+        } else {
+          e.returnValue = false;
+        }
+      }
+    }
+  </script>
+
+  <script>
+    // 事件代理
+    const u1 = document.getElementById('u1');
+
+    const onClick = function(event) {
+      const e = event || window.event;
+      if (e.target.nodeName.toLowerCase() === 'li') {
+        const liList = this.querySelectorAll('li');
+        const index = Array.prototype.indexOf.call(liList, e.target);
+        console.log('li index:',index);
+      }
+    }
+
+    u1.addEventListener('click', onClick, false);
   </script>
 </body>
 </html>
