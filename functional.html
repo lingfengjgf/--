@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // add(1)(2)(3) => 6
+
+    // toString实现
+    // function add(...args) {
+
+    //   // 处理参数
+    //   const inner = function() {
+    //     args.push(...arguments);
+    //     return inner;
+    //   }
+
+    //   inner.toString = () => {
+    //     return args.reduce((prev, cur) => prev + cur )
+    //   }
+
+    //   return inner;
+    // }
+
+
+    // 函数实现
+    // function add(...args) {
+
+    //   // 处理参数
+    //   const inner = function() {
+    //     if (arguments.length) {
+    //       args.push(...arguments);
+    //       return inner;
+    //     } else {
+    //       return args.reduce((prev, cur) => prev + cur);
+    //     }
+    //   }
+
+    //   return inner;
+    // }
+
+    // console.log(add(1)(2)(3)());
+
+    // 将普通函数柯里化
+    function curry(fn) {
+      return function nest(...args) {
+        if (args.length === fn.length) {
+          return fn(...args);
+        } else {
+          return function(arg) {
+            return nest(...args, arg);
+          }
+        }
+      }
+    }
+
+    function addNum(a, b, c) {
+      return a + b + c;
+    }
+
+    const curryAdd = curry(addNum);
+
+    console.log(curryAdd(1)(2)(3));
+
+  </script>
+</body>
+</html>
