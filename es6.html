@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // ES5 中使用常量
+    Object.defineProperty(window, 'str', {
+      value: 'str',
+      writable: false
+    })
+
+    str = '123';
+    console.log("str:", str);
+
+    const obj = { a: 1, arr: [2, 3] };
+    Object.freeze(obj);
+    obj.a = 2;
+    obj.arr[1] = 4;
+    console.log(obj);
+
+    // 深度冻结
+    function deepFreeze(obj) {
+      Object.freeze(obj);
+      (Object.keys(obj) || []).forEach(key => {
+        if (typeof obj[key] === 'object') {
+          deepFreeze(obj[key]);
+        }
+      })
+    }
+    deepFreeze(obj);
+    obj.arr[1] = 6;
+    console.log(obj);
+
+    const obj2 = { name: 'obj2' };
+    const { name: name2 } = obj2;
+    console.log('name2:', name2); 
+
+    // 斐波那契数列
+    function fib(n) {
+      return fibAdv(0, 1, n);
+    }
+
+    function fibAdv (a, b, n) {
+      if (n === 0) {
+        return a;
+      }
+
+      return fibAdv(b, a + b, n - 1);
+    }
+
+    console.log('fib 5:', fib(5));
+    console.log('fib 10:', fib(10));
+  </script>
+</body>
+</html>
