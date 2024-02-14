@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>history 路由</title>
+</head>
+<body>
+  <div>
+    <div id="nav">
+      <a href="./">首页</a>
+      <a href="./news">新闻</a>
+      <a href="./about">关于</a>
+    </div>
+    <div id="context"></div>
+  </div>
+  <script>
+    class Router {
+      constructor() {
+        this.routes = {};
+      }
+
+      addRoutes({path, eleCallback}) {
+        this.routes[path] = eleCallback;
+      }
+
+      push(path) {
+        window.history.pushState({ path }, null, path);
+        this.routes[path]();
+      }
+    }
+
+    const getDom = (text) => {
+      document.getElementById('context').innerText = text;
+    }
+
+    const router = new Router();
+    router.addRoutes({ path: './news', eleCallback: () => getDom('新闻页面') });
+    router.addRoutes({ path: './about', eleCallback: () => getDom('关于页面') });
+    router.addRoutes({ path: './', eleCallback: () => getDom('首页页面') });
+
+    const nav = document.getElementById('nav');
+    nav.addEventListener('click', e => {
+      if (e.target.tagName === 'A') {
+        e.preventDefault();
+        const path = e.target.getAttribute('href');
+        router.push(path);
+      }
+    })
+  </script>
+</body>
+</html>
