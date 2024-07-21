@@ -13,9 +13,9 @@ generate：把前两步生成的ast组成render字符串，然后将render字符
 
 vue2的响应式是通过数据劫持和发布订阅模式实现的。
 
-vue在初始化数据是，会通过Object.defineProperty重新定义data中的所有属性，当页面使用对应属性的时候，首先会进行依赖收集（收集当前组件的watcher），如果属性发生变化，会通知依赖进行更新操作（发布订阅）。
+vue在初始化数据时，会通过Object.defineProperty重新定义data中的所有属性，当页面使用对应属性的时候，首先会进行依赖收集（收集当前组件的watcher），如果属性发生变化，会通知依赖进行更新操作（发布订阅）。
 
-当把一个普通的js对象传给vue实例来作为data选项是，vue会遍历它的所有属性，用Object.defineProperty劫持各个属性的gettter、setter，使用getter收集依赖，setter通知watcher派发更新，触发对应的监听回调。
+当把一个普通的js对象传给vue实例来作为data选项时，vue会遍历它的所有属性，用Object.defineProperty劫持各个属性的gettter、setter，使用getter收集依赖，setter通知watcher派发更新，触发对应的监听回调。
 
 vue的双向绑定是通过Observer来监听 model 的数据变化，通过Compile来解析编译模板指令，通过watcher建立Observer和Compile之间的联系，达到数据变化 -> 视图更新，视图交互变化 -> model 数据变化的双向绑定效果。
 
